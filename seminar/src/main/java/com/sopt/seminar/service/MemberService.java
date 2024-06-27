@@ -1,8 +1,10 @@
 package com.sopt.seminar.service;
 
 import com.sopt.seminar.domain.Member;
+import com.sopt.seminar.common.dto.ErrorMessage;
 import com.sopt.seminar.dto.MemberCreateDto;
 import com.sopt.seminar.dto.MemberFindDto;
+import com.sopt.seminar.exception.NotFoundException;
 import com.sopt.seminar.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -29,6 +31,11 @@ public class MemberService {
         return MemberFindDto.of(memberRepository.findById(memberId).orElseThrow(
                 () -> new EntityNotFoundException("ID에 해당하는 사용자가 존재하지 않습니다.")
         ));
+    }
+
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(
+                () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND));
     }
 
     public void deleteMemberById(Long memberId){

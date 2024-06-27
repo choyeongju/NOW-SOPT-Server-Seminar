@@ -1,8 +1,9 @@
 package com.sopt.seminar.controller;
 
 import com.sopt.seminar.dto.BlogCreateRequest;
-import com.sopt.seminar.dto.SuccessMessage;
-import com.sopt.seminar.dto.SuccessStatusResponse;
+import com.sopt.seminar.common.dto.SuccessMessage;
+import com.sopt.seminar.common.dto.SuccessStatusResponse;
+import com.sopt.seminar.dto.BlogTitleUpdateRequest;
 import com.sopt.seminar.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,14 @@ public class BlogController {
                         "Location",
                         blogService.create(memberId, blogCreateRequest))
                 .body(SuccessStatusResponse.of(SuccessMessage.BLOG_CREATE_SUCCESS));
+    }
+
+    @PatchMapping("/blog/{blogId}/title")
+    public ResponseEntity updateBlogTitle(
+            @PathVariable Long blogId,
+            @RequestBody BlogTitleUpdateRequest blogTitleUpdateRequest
+    ){
+        blogService.updateTitle(blogId, blogTitleUpdateRequest);
+        return ResponseEntity.noContent().build();
     }
 }

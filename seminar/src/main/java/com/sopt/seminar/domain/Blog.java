@@ -1,6 +1,7 @@
 package com.sopt.seminar.domain;
 
 import com.sopt.seminar.dto.BlogCreateRequest;
+import com.sopt.seminar.dto.BlogTitleUpdateRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class Blog extends BaseTimeEntity {
 
     public static Blog create(Member member, BlogCreateRequest blogCreateRequest) {
         return new Blog(member, blogCreateRequest.title(), blogCreateRequest.description());
+    }
+
+    public void updateTitle(BlogTitleUpdateRequest blogTitleUpdateRequest) {
+        this.title = blogTitleUpdateRequest.title();
     }
 }
 

@@ -1,7 +1,7 @@
 package com.sopt.seminar.service;
 
 import com.sopt.seminar.domain.Member;
-import com.sopt.seminar.dto.ErrorMessage;
+import com.sopt.seminar.common.dto.ErrorMessage;
 import com.sopt.seminar.dto.MemberCreateDto;
 import com.sopt.seminar.dto.MemberFindDto;
 import com.sopt.seminar.exception.NotFoundException;

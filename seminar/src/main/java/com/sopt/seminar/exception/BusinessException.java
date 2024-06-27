@@ -1,6 +1,6 @@
 package com.sopt.seminar.exception;
 
-import com.sopt.seminar.dto.ErrorMessage;
+import com.sopt.seminar.common.dto.ErrorMessage;
 import lombok.Getter;
 
 @Getter

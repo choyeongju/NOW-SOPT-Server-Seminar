@@ -1,4 +1,4 @@
-package com.sopt.seminar.dto;
+package com.sopt.seminar.common.dto;
 
 public record ErrorResponse(int status, String message) {
     public static ErrorResponse of(int status, String message) {

@@ -1,4 +1,4 @@
-package com.sopt.seminar.dto;
+package com.sopt.seminar.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.sopt.seminar.controller;
 
+import com.sopt.seminar.auth.PrincipalHandler;
 import com.sopt.seminar.dto.BlogCreateRequest;
 import com.sopt.seminar.common.dto.SuccessMessage;
 import com.sopt.seminar.common.dto.SuccessStatusResponse;
@@ -11,22 +12,34 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class BlogController {
 
     private final BlogService blogService;
+    private final PrincipalHandler principalHandler;
+
+//    @PostMapping("/blog")
+//    public ResponseEntity<SuccessStatusResponse> createBlog(
+//            @RequestHeader(name = "memberId") Long memberId,
+//            @RequestBody BlogCreateRequest blogCreateRequest
+//    ) {
+//        return ResponseEntity.status(HttpStatus.CREATED).header(
+//                        "Location",
+//                        blogService.create(memberId, blogCreateRequest))
+//                .body(SuccessStatusResponse.of(SuccessMessage.BLOG_CREATE_SUCCESS));
+//    }
 
     @PostMapping("/blog")
-    public ResponseEntity<SuccessStatusResponse> createBlog(
-            @RequestHeader(name = "memberId") Long memberId,
-            @RequestBody BlogCreateRequest blogCreateRequest
-    ) {
-        return ResponseEntity.status(HttpStatus.CREATED).header(
-                        "Location",
-                        blogService.create(memberId, blogCreateRequest))
-                .body(SuccessStatusResponse.of(SuccessMessage.BLOG_CREATE_SUCCESS));
+    public ResponseEntity createBlog(
+            BlogCreateRequest blogCreateRequest
+    ){
+        return ResponseEntity.created(URI.create(blogService.create(
+                principalHandler.getUserIdFromPrincipal(), blogCreateRequest
+        ))).build();
     }
 
     @PatchMapping("/blog/{blogId}/title")

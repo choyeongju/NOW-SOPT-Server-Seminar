@@ -2,8 +2,10 @@ package com.sopt.seminar.controller;
 
 import com.sopt.seminar.dto.MemberCreateDto;
 import com.sopt.seminar.dto.MemberFindDto;
+import com.sopt.seminar.dto.UserJoinResponse;
 import com.sopt.seminar.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +18,21 @@ public class MemberController {
 
     private final MemberService memberService;
 
+//    @PostMapping
+//    public ResponseEntity createMember(
+//            @RequestBody MemberCreateDto memberCreate
+//    ){
+//        return ResponseEntity.created(URI.create(memberService.createMember(memberCreate))).build();
+//    }
+
     @PostMapping
-    public ResponseEntity createMember(
+    public ResponseEntity<UserJoinResponse> postMember(
             @RequestBody MemberCreateDto memberCreate
     ){
-        return ResponseEntity.created(URI.create(memberService.createMember(memberCreate))).build();
+        UserJoinResponse userJoinResponse = memberService.createMember(memberCreate);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", userJoinResponse.userId())
+                .body(userJoinResponse);
     }
 
     @GetMapping("/{memberId}")

@@ -27,12 +27,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation group:'org.postgresql', name:'postgresql', version:'42.7.3'
+
+	//@Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//JWT
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+	//Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 }
 

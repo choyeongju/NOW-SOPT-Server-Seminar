@@ -1,6 +1,8 @@
 package com.sopt.seminar.service;
 
 import com.sopt.seminar.auth.UserAuthentication;
+import com.sopt.seminar.auth.redis.domain.Token;
+import com.sopt.seminar.auth.redis.repository.RedisTokenRepository;
 import com.sopt.seminar.common.jwt.JwtTokenProvider;
 import com.sopt.seminar.domain.Member;
 import com.sopt.seminar.common.dto.ErrorMessage;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTokenRepository redisTokenRepository;
 
     /*
     1. Member 객체 생성
@@ -40,6 +43,9 @@ public class MemberService {
         Long memberId = member.getId();
         String accessToken = jwtTokenProvider.issueAccessToken(UserAuthentication.createUserAuthentication(memberId));
         String refreshToken = jwtTokenProvider.issueRefreshToken(UserAuthentication.createUserAuthentication(memberId));
+
+        //redis에 refreshToken 저장 -> 이걸로 accessToken 다시 발급 받아야 하니까!
+        redisTokenRepository.save(Token.of(memberId, refreshToken));
         return UserJoinResponse.of(accessToken, refreshToken, memberId.toString());
     }
 
